@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <title>ElectroApparel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: linear-gradient(to right,white,#0056b3 );
+            text-align: center;
+        }
+
+        .login {
+            width: 300px;
+            margin: auto;
+            padding: 30px;
+            background: white;
+            border-radius: 8px;
+            margin-top: 100px;
+			
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+        }
+
+        button {
+            background-color:#0056b3 ;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #bebebe;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login">
+		<img align = "left" width= "15%" height="15%" src="images/Logo.jpeg" alt="not found">
+        <h2>Login to ElectroApparel</h2>
+        <form id="loginForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" required minlength="8">
+
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <script>
+        const savedUsername = "user123";
+        const savedPassword = "password123";
+        let attempts = 0;
+
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+
+            if (username === savedUsername && password === savedPassword) {
+                alert("Login successful!");
+                window.location.href = "products.html"; 
+            } else {
+                attempts++;
+                alert(`Invalid login. ${3 - attempts} attempts remaining.`);
+
+                if (attempts >= 3) {
+                    alert("Too many failed attempts. Redirecting to error page.");
+                    window.location.href = "error.html"; 
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

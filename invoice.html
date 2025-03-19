@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invoice</title>
+    <style>
+		
+        body {
+            font-family: Arial, sans-serif;
+			background-image: linear-gradient(to right,white,#0056b3 );
+            text-align: center;
+			justify-content: space-between;
+        }
+
+		header, footer {
+            background-color: #007BFF;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 20px;
+        }
+        
+
+        .invoice {
+            width: 400px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            text-align: center;
+        }
+
+        .invoice ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .invoice li {
+            display: flex;
+            justify-content: space-evenly;
+            padding: 5px 0;
+        }
+
+        h2 {
+            color: #007BFF;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #bebebe;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Invoice</h1>
+    </header>
+
+    <main>
+        <div class="invoice">
+            <h2>Order Summary</h2>
+            <p><strong>Date:</strong> <span id="order-date"></span></p>
+            <ul id="invoice-items"></ul>
+            
+            <p><strong>Subtotal:</strong> $<span id="subtotal">0.00</span></p>
+            <p><strong>Tax (10%):</strong> $<span id="tax">0.00</span></p>
+            <p><strong>Discount (5% if subtotal > $100):</strong> $<span id="discount">0.00</span></p>
+            <h3><strong>Total:</strong> $<span id="total">0.00</span></h3>
+
+            <button onclick="clearInvoice()">Cancel</button>
+            <button onclick="exitSite()">Exit</button>
+        </div>
+		 <footer>
+        <p>&copy; 2025 ElectroApparel. All Rights Reserved.</p>
+    </footer>
+
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let subtotal = parseFloat(localStorage.getItem("totalPrice")) || 0;
+            let tax = subtotal * 0.10;
+            let discount = subtotal > 100 ? subtotal * 0.05 : 0;
+            let total = subtotal + tax - discount;
+
+            document.getElementById("order-date").textContent = new Date().toLocaleDateString();
+            
+            let invoiceList = document.getElementById("invoice-items");
+            cart.forEach(item => {
+                let li = document.createElement("li");
+                li.textContent = `${item.name} - $${item.price.toFixed(2)}`;
+                invoiceList.appendChild(li);
+            });
+
+            document.getElementById("subtotal").textContent = subtotal.toFixed(2);
+            document.getElementById("tax").textContent = tax.toFixed(2);
+            document.getElementById("discount").textContent = discount.toFixed(2);
+            document.getElementById("total").textContent = total.toFixed(2);
+        });
+
+        function clearInvoice() {
+            localStorage.removeItem("cart");
+            localStorage.removeItem("totalPrice");
+            window.location.href = "products.html";
+        }
+
+        function exitSite() {
+            window.location.href = "login.html";
+        }
+    </script>
+
+</body>
+</html>
